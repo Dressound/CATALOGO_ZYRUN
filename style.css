@@ -314,4 +314,32 @@
       transform: translateY(0);
     }
   }
-  
+
+  /* Categorías como acordeón */
+.categoria h2 {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoria h2::after {
+  content: "▼"; /* Flecha hacia abajo */
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.categoria.abierta h2::after {
+  transform: rotate(180deg); /* Flecha hacia arriba */
+}
+
+.productos {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.categoria.abierta .productos {
+  max-height: 2000px; /* Valor grande para permitir expandir todos los productos */
+}
