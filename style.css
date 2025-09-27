@@ -1,321 +1,393 @@
 /* -------------------
-   RESET & BASE
+    RESET & BASE - Buenas Prácticas
 ------------------- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  :root {
-    --primary: #007bff;
-    --primary-dark: #0056b3;
-    --secondary: #28a745;
-    --text: #333;
-    --text-light: #555;
-    --bg: #f4f6f9;
-    --card-bg: #fff;
-    --radius: 12px;
-    --shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-  }
-  
-  body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding: 20px;
-    line-height: 1.5;
-  }
-  
-  /* -------------------
-     HEADER
-  ------------------- */
-  header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  header h1 {
-    color: #2c3e50;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    flex: 1;
-    text-align: center;
-  }
-  
-  .logo {
-    max-height: 50px;
-    flex-shrink: 0;
-  }
-  
-  .filtros {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
-  .filtros input,
-  .filtros select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: var(--radius);
-    min-width: 200px;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-  }
-  
-  .filtros input:focus,
-  .filtros select:focus {
-    border-color: var(--primary);
-    outline: none;
-  }
-  
-  /* -------------------
-     ICONO CARRITO
-  ------------------- */
-  .icono-carrito {
-    cursor: pointer;
-    font-size: 1.5rem;
-    position: relative;
-  }
-  
-  #contador-carrito {
-    background: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 0.75rem;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-  }
-  
-  /* -------------------
-     CATEGORÍAS
-  ------------------- */
-  .categoria {
-    margin-bottom: 50px;
-    animation: fadeIn 0.6s ease-in-out;
-  }
-  
-  .categoria h2 {
-    background: linear-gradient(90deg, var(--primary), #00c6ff);
-    color: white;
-    padding: 12px;
-    border-radius: var(--radius);
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    text-align: left;
-  }
-  
-  /* -------------------
-     PRODUCTOS
-  ------------------- */
-  .productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-    align-items: stretch;
-  }
-  
-  .producto {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 15px;
-    box-shadow: var(--shadow);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    text-align: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .producto:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .producto img {
-    max-width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    margin-bottom: 12px;
-  }
-  
-  .producto:hover img {
-    transform: scale(1.03);
-  }
-  
-  .producto h3 {
-    margin: 8px 0 6px;
-    font-size: 1rem;
-    color: #222;
-    flex-shrink: 0;
-  }
-  
-  /* 🔹 Descripción con truncado */
-  .producto p {
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
-    margin: 4px 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Paleta de colores más moderna */
+  --primary: #007bff; /* Azul vibrante para acciones principales */
+  --primary-dark: #0056b3;
+  --secondary: #28a745; /* Verde para precios/éxito */
+  --text: #2c3e50; /* Gris oscuro para mayor legibilidad */
+  --text-light: #7f8c8d; /* Gris claro para descripciones */
+  --bg: #ecf0f1; /* Fondo muy claro */
+  --card-bg: #fff;
+  --radius: 12px;
+  /* Sombra más suave y moderna */
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif; /* Fuente más actual */
+  background: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  line-height: 1.5;
+}
+
+/* -------------------
+  HEADER
+------------------- */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px; /* Más espacio entre elementos */
+}
+
+header h1 {
+  color: var(--text);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 600; /* Fuente semibold */
+  flex: 1;
+  text-align: center;
+}
+
+.logo {
+  max-height: 50px;
+  flex-shrink: 0;
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.filtros input,
+.filtros select {
+  padding: 10px 15px;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px; /* Radio más sutil */
+  min-width: 220px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+/* -------------------
+  ICONO CARRITO
+------------------- */
+.icono-carrito {
+  cursor: pointer;
+  font-size: 1.8rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.icono-carrito:hover {
+  transform: scale(1.1);
+}
+
+#contador-carrito {
+  background: #e74c3c; /* Rojo de alerta */
+  color: white;
+  border-radius: 50%;
+  padding: 3px 7px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------
+  CATEGORÍAS
+------------------- */
+.categoria {
+  margin-bottom: 40px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.categoria h2 {
+  background: linear-gradient(90deg, var(--primary), #3498db);
+  color: white;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+/* -------------------
+  PRODUCTOS - Diseño Compacto y Profesional
+------------------- */
+.productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px; /* Más espacio entre tarjetas */
+  margin-top: -45px;
+  align-items: stretch; /* Permite que todas las tarjetas tengan la misma altura */
+}
+
+.producto {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  /* padding: [vertical] [horizontal]; */
+  /* Reducimos el padding de 20px a 15px o 10px para compactar el diseño verticalmente. */
+  padding: 15px 20px; /* 15px arriba/abajo, 20px a los lados */ 
+  box-shadow: var(--shadow);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.producto:hover {
+  transform: translateY(-8px); /* Efecto de elevación más notable */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+}
+
+.producto img {
+  max-width: 100%;
+  height: 180px; /* Altura de imagen más compacta */
+  object-fit: contain; /* Usamos 'contain' para asegurar que el producto completo se vea */
+  border-radius: 8px;
+  margin-bottom: 0px; /* Espacio reducido */
+}
+
+.producto h3 {
+  /* Margen: 2px arriba y 2px abajo */
+  margin: -2px -2px; 
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+/* 🔹 Descripción con truncado (Usando .descripcion-producto del JS) */
+.producto .descripcion-producto, 
+.producto p:not(.precio):not(.stock) {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    /* 🔥 CORRECCIÓN: Volver a márgenes normales. Usa 6px abajo. 🔥 */
+    margin: -1px 0 -5px 0; 
     color: var(--text-light);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-grow: 1;
-  }
-  
-  .precio {
-    font-weight: bold;
-    color: var(--secondary);
-    margin-top: 8px;
-    font-size: 1rem;
-  }
-  
-  .stock {
-    font-size: 0.8rem;
-    color: #888;
-  }
-  
-  /* Botón agregar al carrito */
-  .producto button {
-    margin-top: 10px;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: var(--primary);
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: background 0.3s ease;
-  }
-  
-  .producto button:hover {
-    background: var(--primary-dark);
-  }
-  
-  /* -------------------
-     MODALES
-  ------------------- */
-  .carrito-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 15px;
-  }
-  
-  .carrito-contenido {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: var(--radius);
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  
-  #lista-carrito {
-    list-style: none;
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    padding-right: 6px;
-  }
-  
-  #lista-carrito li {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-  }
-  
-  #lista-carrito li button {
-    background: #ff4d4d;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    padding: 2px 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-  }
-  
-  #btn-enviar-pedido {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 0.9rem;
-  }
-  
-  #cerrar-carrito,
-  #cerrar-formulario {
-    background: #888;
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 0.85rem;
-  }
-  
-  /* -------------------
-     FOOTER
-  ------------------- */
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  .contacto {
-    text-align: center;
-    margin: 10px 0 20px 0;
-    font-weight: bold;
-    color: var(--primary);
-    font-size: 0.95rem;
-  }
-  
-  /* -------------------
-     ANIMACIONES
-  ------------------- */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+    /* (Asegúrate de que flex-grow: 1; siga eliminado) */
+}
 
-  /* Categorías como acordeón */
+/* 🔥 CORRECCIÓN CRUCIAL: PEGAR PRECIO Y STOCK 🔥 */
+.precio {
+  font-weight: 700;
+  color: var(--secondary);
+  font-size: 1.25rem;
+  /* 🔥 CORRECCIÓN: Margen superior de 8px, margen inferior de 0px para pegarse al stock. 🔥 */
+  margin: -22px 0 -2px 0; 
+  padding-bottom: 0; /* Asegurar que no haya padding */
+}
+
+.stock {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  /* Margen CERO Arriba y a los lados */
+  margin: -20px 0 0 0;  
+  /* Padding para separar del botón (si el JS lo maneja, sino 5px) */
+  padding-bottom: 0px; 
+}
+
+/* Contenedor de botones para asegurar un espaciado uniforme */
+.producto button {
+  /* Estilo general para todos los botones de la tarjeta */
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.1s ease;
+  margin-top: -20px; /* Espacio entre botones y stock/botones */
+}
+
+.producto button:active {
+  transform: scale(0.99);
+}
+
+/* Botón principal */
+.agregar-carrito {
+  background: var(--primary);
+  color: white;
+}
+.agregar-carrito:hover {
+  background: var(--primary-dark);
+}
+
+/* Botón secundario */
+.leer-mas {
+  background: #95a5a6; /* Gris neutro */
+  color: white;
+  margin-top: 1px; /* Más espacio entre los dos botones */
+}
+.leer-mas:hover {
+  background: #7f8c8d;
+}
+
+
+/* -------------------
+  MODALES
+------------------- */
+.carrito-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7); /* Oscurecido */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.carrito-contenido {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.carrito-contenido h2 {
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+#lista-carrito {
+  list-style: none;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 10px;
+  text-align: left;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+#lista-carrito li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+#lista-carrito li button {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+#btn-enviar-pedido {
+  background: var(--secondary);
+  color: white;
+  margin-right: 10px;
+}
+#btn-enviar-pedido:hover {
+  background: #218838;
+}
+
+#cerrar-carrito,
+#cerrar-formulario {
+  background: #7f8c8d;
+  color: white;
+}
+#cerrar-carrito:hover, #cerrar-formulario:hover {
+  background: #6c7a89;
+}
+
+
+/* Formulario de Pedido */
+#formulario-pedido input,
+#formulario-pedido textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#formulario-pedido textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#formulario-pedido button[type="submit"] {
+  background: var(--primary);
+  color: white;
+  margin-top: 10px;
+}
+#formulario-pedido button[type="submit"]:hover {
+  background: var(--primary-dark);
+}
+
+/* -------------------
+  FOOTER
+------------------- */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  border-top: 1px solid #bdc3c7;
+}
+
+.contacto {
+  text-align: center;
+  margin: 10px 0 15px 0;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* -------------------
+  ACORDEÓN
+------------------- */
 .categoria h2 {
   cursor: pointer;
   position: relative;
@@ -325,21 +397,30 @@
 }
 
 .categoria h2::after {
-  content: "▼"; /* Flecha hacia abajo */
+  content: "▼";
   font-size: 0.9rem;
   transition: transform 0.3s ease;
 }
 
 .categoria.abierta h2::after {
-  transform: rotate(180deg); /* Flecha hacia arriba */
+  transform: rotate(180deg);
 }
 
 .productos {
-  max-height: 0;
+  /* Mantenemos el display grid para el diseño de las tarjetas */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px; 
+  /* Margen normal para separar del título de la categoría */
+  margin-top: 5px; 
+  align-items: stretch;
+
+  /* Propiedades clave del acordeón: OCULTAR por defecto */
+  max-height: 0; 
   overflow: hidden;
-  transition: max-height 0.4s ease;
+  transition: max-height 0.4s ease-in-out;
 }
 
 .categoria.abierta .productos {
-  max-height: 2000px; /* Valor grande para permitir expandir todos los productos */
+  max-height: 100000px; 
 }
