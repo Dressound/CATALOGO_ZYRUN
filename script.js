@@ -105,20 +105,31 @@ function mostrarCatalogo(lista) {
 // Filtros
 // ----------------------
 function aplicarFiltros() {
-  const texto = document.getElementById("buscador").value.toLowerCase();
-  const categoria = document.getElementById("filtro-categoria").value;
-
-  const filtrados = productos.filter((p) => {
-    const coincideTexto =
-      p.Nombre.toLowerCase().includes(texto) ||
-      p.Descripcion.toLowerCase().includes(texto);
-    const coincideCategoria =
-      categoria === "todas" || p.Categoria === categoria;
-    return coincideTexto && coincideCategoria;
-  });
-
-  mostrarCatalogo(filtrados);
-}
+    const texto = document.getElementById("buscador").value.toLowerCase();
+    const categoria = document.getElementById("filtro-categoria").value;
+    // ✅ Obtener los valores de los nuevos inputs y parsearlos a número
+    const precioMin = parseFloat(document.getElementById("precio-min").value);
+    const precioMax = parseFloat(document.getElementById("precio-max").value);
+  
+    const filtrados = productos.filter((p) => {
+      const coincideTexto =
+        p.Nombre.toLowerCase().includes(texto) ||
+        p.Descripcion.toLowerCase().includes(texto);
+      const coincideCategoria =
+        categoria === "todas" || p.Categoria === categoria;
+  
+      // ✅ Nuevo filtro de precio
+      const precioProducto = parseFloat(p.Precio);
+      const coincidePrecioMin = isNaN(precioMin) || precioProducto >= precioMin;
+      const coincidePrecioMax = isNaN(precioMax) || precioProducto <= precioMax;
+      // ------------------------
+  
+      // ✅ Combina todos los filtros
+      return coincideTexto && coincideCategoria && coincidePrecioMin && coincidePrecioMax;
+    });
+  
+    mostrarCatalogo(filtrados);
+  }
 
 // ----------------------
 // Carrito
@@ -220,8 +231,11 @@ function init() {
   cargarProductos();
   document.getElementById("buscador").addEventListener("input", aplicarFiltros);
   document
-    .getElementById("filtro-categoria")
-    .addEventListener("change", aplicarFiltros);
+    .getElementById("filtro-categoria")
+      .addEventListener("change", aplicarFiltros);
+    // ✅ Agregar event listeners para los nuevos filtros de precio
+    document.getElementById("precio-min").addEventListener("input", aplicarFiltros);
+    document.getElementById("precio-max").addEventListener("input", aplicarFiltros);
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("agregar-carrito")) {

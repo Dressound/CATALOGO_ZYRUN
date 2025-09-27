@@ -83,9 +83,12 @@ header h1 {
   border: 1px solid #bdc3c7;
   border-radius: 8px;
   /* Radio más sutil */
-  min-width: 220px;
+  min-width: 150px;
+  flex-grow: 1;
+  max-width: 250px;
+  /* ------------------------------------------------------------- */
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+ transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filtros input:focus,
