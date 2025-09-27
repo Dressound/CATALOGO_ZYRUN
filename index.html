@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo de Productos</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src="img/logo_2.png" alt="Logo Empresa" class="logo">
+      <h1>Catálogo de Productos</h1>
+      <!-- Icono de carrito con contador -->
+      <div id="icono-carrito" class="icono-carrito">🛒 <span id="contador-carrito">0</span></div>
+    </div>
+
+    <div class="filtros">
+      <input type="text" id="buscador" placeholder="🔍 Buscar productos...">
+      <select id="filtro-categoria">
+        <option value="todas">Todas las categorías</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Contenedor dinámico de productos -->
+  <div id="catalogo"></div>
+
+  <!-- Modal carrito -->
+  <div id="carrito-modal" class="carrito-modal">
+    <div class="carrito-contenido">
+      <h2>Carrito de Compras</h2>
+      <ul id="lista-carrito"></ul>
+      <p>Total: $<span id="total-carrito">0</span></p>
+      <button id="btn-enviar-pedido">Enviar Pedido</button>
+      <button id="cerrar-carrito">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal formulario de pedido -->
+  <div id="formulario-modal" class="carrito-modal">
+    <div class="carrito-contenido">
+      <h2>Formulario de Pedido</h2>
+      <form id="formulario-pedido">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="correo" placeholder="Correo" required>
+        <input type="tel" name="telefono" placeholder="Teléfono" required>
+        <textarea name="direccion" placeholder="Dirección" required></textarea>
+        <button type="submit">Enviar Pedido</button>
+      </form>
+      <button id="cerrar-formulario">Cerrar</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="contacto">📞 Tel: +593 993 842 259</div>
+    <p>© 2025 - Catalogo Zyrun.ec</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
