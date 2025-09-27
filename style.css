@@ -9,12 +9,17 @@
 
 :root {
   /* Paleta de colores más moderna */
-  --primary: #007bff; /* Azul vibrante para acciones principales */
+  --primary: #007bff;
+  /* Azul vibrante para acciones principales */
   --primary-dark: #0056b3;
-  --secondary: #28a745; /* Verde para precios/éxito */
-  --text: #2c3e50; /* Gris oscuro para mayor legibilidad */
-  --text-light: #7f8c8d; /* Gris claro para descripciones */
-  --bg: #ecf0f1; /* Fondo muy claro */
+  --secondary: #28a745;
+  /* Verde para precios/éxito */
+  --text: #2c3e50;
+  /* Gris oscuro para mayor legibilidad */
+  --text-light: #7f8c8d;
+  /* Gris claro para descripciones */
+  --bg: #ecf0f1;
+  /* Fondo muy claro */
   --card-bg: #fff;
   --radius: 12px;
   /* Sombra más suave y moderna */
@@ -22,7 +27,8 @@
 }
 
 body {
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif; /* Fuente más actual */
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  /* Fuente más actual */
   background: var(--bg);
   color: var(--text);
   padding: 20px;
@@ -43,13 +49,15 @@ header {
   justify-content: space-between;
   margin-bottom: 15px;
   flex-wrap: wrap;
-  gap: 15px; /* Más espacio entre elementos */
+  gap: 15px;
+  /* Más espacio entre elementos */
 }
 
 header h1 {
   color: var(--text);
   font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 600; /* Fuente semibold */
+  font-weight: 600;
+  /* Fuente semibold */
   flex: 1;
   text-align: center;
 }
@@ -73,10 +81,14 @@ header h1 {
 .filtros select {
   padding: 10px 15px;
   border: 1px solid #bdc3c7;
-  border-radius: 8px; /* Radio más sutil */
-  min-width: 220px;
+  border-radius: 8px;
+  /* Radio más sutil */
+  min-width: 150px;
+  flex-grow: 1;
+  max-width: 250px;
+  /* ------------------------------------------------------------- */
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+ transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filtros input:focus,
@@ -101,7 +113,8 @@ header h1 {
 }
 
 #contador-carrito {
-  background: #e74c3c; /* Rojo de alerta */
+  background: #e74c3c;
+  /* Rojo de alerta */
   color: white;
   border-radius: 50%;
   padding: 3px 7px;
@@ -139,9 +152,11 @@ header h1 {
 .productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px; /* Más espacio entre tarjetas */
+  gap: 30px;
+  /* Más espacio entre tarjetas */
   margin-top: -45px;
-  align-items: stretch; /* Permite que todas las tarjetas tengan la misma altura */
+  align-items: stretch;
+  /* Permite que todas las tarjetas tengan la misma altura */
 }
 
 .producto {
@@ -149,7 +164,8 @@ header h1 {
   border-radius: var(--radius);
   /* padding: [vertical] [horizontal]; */
   /* Reducimos el padding de 20px a 15px o 10px para compactar el diseño verticalmente. */
-  padding: 15px 20px; /* 15px arriba/abajo, 20px a los lados */ 
+  padding: 15px 20px;
+  /* 15px arriba/abajo, 20px a los lados */
   box-shadow: var(--shadow);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
   text-align: center;
@@ -157,22 +173,55 @@ header h1 {
   display: flex;
   flex-direction: column;
 }
+
+.id-etiqueta {
+    position: absolute;
+    /* Posicionar en la esquina superior izquierda de la tarjeta */
+    top: 10px;
+    left: 10px;
+    /* Estilo de círculo azul pequeño */
+    background-color: var(--primary); /* Azul vibrante */
+    color: white;
+    font-size: 0.75rem; /* Tamaño de fuente pequeño */
+    font-weight: 700;
+    line-height: 1; /* Para centrar el texto verticalmente */
+    
+    /* Tamaño y forma circular */
+    width: 28px; 
+    height: 28px;
+    border-radius: 50%;
+    
+    /* Centrar el texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Asegurar que esté por encima de la imagen */
+    z-index: 10;
+    /* Añadir una sombra sutil para que resalte */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
 .producto:hover {
-  transform: translateY(-8px); /* Efecto de elevación más notable */
+  transform: translateY(-8px);
+  /* Efecto de elevación más notable */
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
 }
 
 .producto img {
   max-width: 100%;
-  height: 180px; /* Altura de imagen más compacta */
-  object-fit: contain; /* Usamos 'contain' para asegurar que el producto completo se vea */
+  height: 180px;
+  /* Altura de imagen más compacta */
+  object-fit: contain;
+  /* Usamos 'contain' para asegurar que el producto completo se vea */
   border-radius: 8px;
-  margin-bottom: 0px; /* Espacio reducido */
+  margin-bottom: 0px;
+  /* Espacio reducido */
 }
 
 .producto h3 {
   /* Margen: 2px arriba y 2px abajo */
-  margin: -2px -2px; 
+  margin: -2px -2px;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text);
@@ -180,17 +229,17 @@ header h1 {
 }
 
 /* 🔹 Descripción con truncado (Usando .descripcion-producto del JS) */
-.producto .descripcion-producto, 
+.producto .descripcion-producto,
 .producto p:not(.precio):not(.stock) {
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
-    /* 🔥 CORRECCIÓN: Volver a márgenes normales. Usa 6px abajo. 🔥 */
-    margin: -1px 0 -5px 0; 
-    color: var(--text-light);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* (Asegúrate de que flex-grow: 1; siga eliminado) */
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  /* 🔥 CORRECCIÓN: Volver a márgenes normales. Usa 6px abajo. 🔥 */
+  margin: -1px 0 -5px 0;
+  color: var(--text-light);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* (Asegúrate de que flex-grow: 1; siga eliminado) */
 }
 
 /* 🔥 CORRECCIÓN CRUCIAL: PEGAR PRECIO Y STOCK 🔥 */
@@ -199,17 +248,18 @@ header h1 {
   color: var(--secondary);
   font-size: 1.25rem;
   /* 🔥 CORRECCIÓN: Margen superior de 8px, margen inferior de 0px para pegarse al stock. 🔥 */
-  margin: -22px 0 -2px 0; 
-  padding-bottom: 0; /* Asegurar que no haya padding */
+  margin: -22px 0 -2px 0;
+  padding-bottom: 0;
+  /* Asegurar que no haya padding */
 }
 
 .stock {
   font-size: 0.85rem;
   color: var(--text-light);
   /* Margen CERO Arriba y a los lados */
-  margin: -20px 0 0 0;  
+  margin: -20px 0 0 0;
   /* Padding para separar del botón (si el JS lo maneja, sino 5px) */
-  padding-bottom: 0px; 
+  padding-bottom: 0px;
 }
 
 /* Contenedor de botones para asegurar un espaciado uniforme */
@@ -223,7 +273,8 @@ header h1 {
   font-size: 0.95rem;
   font-weight: 600;
   transition: background 0.3s ease, transform 0.1s ease;
-  margin-top: -20px; /* Espacio entre botones y stock/botones */
+  margin-top: -20px;
+  /* Espacio entre botones y stock/botones */
 }
 
 .producto button:active {
@@ -235,16 +286,20 @@ header h1 {
   background: var(--primary);
   color: white;
 }
+
 .agregar-carrito:hover {
   background: var(--primary-dark);
 }
 
 /* Botón secundario */
 .leer-mas {
-  background: #95a5a6; /* Gris neutro */
+  background: #95a5a6;
+  /* Gris neutro */
   color: white;
-  margin-top: 1px; /* Más espacio entre los dos botones */
+  margin-top: 1px;
+  /* Más espacio entre los dos botones */
 }
+
 .leer-mas:hover {
   background: #7f8c8d;
 }
@@ -260,7 +315,8 @@ header h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7); /* Oscurecido */
+  background: rgba(0, 0, 0, 0.7);
+  /* Oscurecido */
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -281,8 +337,15 @@ header h1 {
 }
 
 @keyframes modalIn {
-  from { opacity: 0; transform: scale(0.9) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .carrito-contenido h2 {
@@ -327,6 +390,7 @@ header h1 {
   color: white;
   margin-right: 10px;
 }
+
 #btn-enviar-pedido:hover {
   background: #218838;
 }
@@ -336,7 +400,9 @@ header h1 {
   background: #7f8c8d;
   color: white;
 }
-#cerrar-carrito:hover, #cerrar-formulario:hover {
+
+#cerrar-carrito:hover,
+#cerrar-formulario:hover {
   background: #6c7a89;
 }
 
@@ -361,6 +427,7 @@ header h1 {
   color: white;
   margin-top: 10px;
 }
+
 #formulario-pedido button[type="submit"]:hover {
   background: var(--primary-dark);
 }
@@ -410,17 +477,17 @@ footer {
   /* Mantenemos el display grid para el diseño de las tarjetas */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px; 
+  gap: 30px;
   /* Margen normal para separar del título de la categoría */
-  margin-top: 5px; 
+  margin-top: 5px;
   align-items: stretch;
 
   /* Propiedades clave del acordeón: OCULTAR por defecto */
-  max-height: 0; 
+  max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
 }
 
 .categoria.abierta .productos {
-  max-height: 100000px; 
+  max-height: 100000px;
 }
