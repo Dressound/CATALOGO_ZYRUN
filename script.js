@@ -79,15 +79,16 @@ function mostrarCatalogo(lista) {
       const card = document.createElement("div");
       card.classList.add("producto");
       card.innerHTML = `
-        <img src="${p.Imagen}" alt="${p.Nombre}">
-        <h3>${p.Nombre}</h3>
-        <p>${p.Descripcion}</p>
-        <p class="precio">$${p.Precio}</p>
-        <p class="stock">Stock: ${p.Stock}</p>
-        <button class="agregar-carrito">Agregar al carrito</button>
-      `;
-      contenedor.appendChild(card);
-    });
+        <img src="${p.Imagen}" alt="${p.Nombre}">
+        <h3>${p.Nombre}</h3>
+        <p class="descripcion-producto">${p.Descripcion}</p>
+        <p class="precio">$${p.Precio}</p>
+        <p class="stock">Stock: ${p.Stock}</p>
+        <button class="agregar-carrito">Agregar al carrito</button>
+        <button class="leer-mas" aria-expanded="false">Leer más</button> 
+      `;
+      contenedor.appendChild(card);
+    });
 
     section.appendChild(contenedor);
     catalogoDiv.appendChild(section);
@@ -166,35 +167,39 @@ function habilitarAcordeon() {
 // Leer más / menos
 // ----------------------
 function habilitarLeerMas(lineas = 3) {
-  const parrafos = document.querySelectorAll('.producto p');
-
-  parrafos.forEach(par => {
-    if (par.dataset.leermas === 'true') return;
-    par.dataset.leermas = 'true';
-
-    const lineHeight = parseFloat(getComputedStyle(par).lineHeight);
-    const maxHeight = lineHeight * lineas;
-
-    if (par.scrollHeight <= maxHeight + 1) return; // no necesita botón
-
-    par.style.maxHeight = maxHeight + 'px';
-    par.style.overflow = 'hidden';
-
-    const btn = document.createElement('button');
-    btn.textContent = 'Leer más';
-    btn.className = 'leer-mas';
-    btn.setAttribute('aria-expanded', 'false');
-
-    btn.addEventListener('click', () => {
-      const expandido = btn.getAttribute('aria-expanded') === 'true';
-      if (!expandido) {
-        par.style.maxHeight = par.scrollHeight + 'px';
-        btn.setAttribute('aria-expanded', 'true');
-        btn.textContent = 'Leer menos';
-      } else {
-        par.style.maxHeight = maxHeight + 'px';
-        btn.setAttribute('aria-expanded', 'false');
-        btn.textContent = 'Leer más';
+    // Seleccionamos todos los párrafos de descripción y sus botones
+    const tarjetas = document.querySelectorAll('.producto');
+  
+    tarjetas.forEach(card => {
+      const par = card.querySelector('.descripcion-producto'); // Usamos la clase para el párrafo
+      const btn = card.querySelector('.leer-mas'); 
+      if (!par || !btn) return; // Asegurarse de que existan
+  
+      // Calcula la altura máxima para las líneas
+      const lineHeight = parseFloat(getComputedStyle(par).lineHeight);
+      const maxHeight = lineHeight * lineas;
+  
+      // Si el contenido es corto, ocultamos el botón
+      if (par.scrollHeight <= maxHeight + 1) {
+        btn.style.display = 'none';
+        return;
+      }
+  
+      // Aplica la restricción inicial
+      par.style.maxHeight = maxHeight + 'px';
+      par.style.overflow = 'hidden';
+  
+      // Añadir el evento al botón existente
+      btn.addEventListener('click', () => {
+        const expandido = btn.getAttribute('aria-expanded') === 'true';
+        if (!expandido) {
+          par.style.maxHeight = par.scrollHeight + 'px';
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = 'Leer menos';
+        } else {
+          par.style.maxHeight = maxHeight + 'px';
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = 'Leer más';
       }
     });
 
