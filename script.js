@@ -1,4 +1,5 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSOV26as2bsWMXhMGfnIcQY25nAZA1T2M3KsffmpZEVsQa431IRnrFhUyQ-jQAWWosh309a-DyoHIfK/pub?output=csv";
+const SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSOV26as2bsWMXhMGfnIcQY25nAZA1T2M3KsffmpZEVsQa431IRnrFhUyQ-jQAWWosh309a-DyoHIfK/pub?output=csv";
 
 let productos = [];
 let categorias = new Set();
@@ -11,18 +12,20 @@ async function cargarProductos() {
   try {
     const resp = await fetch(SHEET_URL);
     const data = await resp.text();
-    const filas = data.split("\n").map(r => r.split(","));
-    const headers = filas[0].map(h => h.trim());
+    const filas = data.split("\n").map((r) => r.split(","));
+    const headers = filas[0].map((h) => h.trim());
 
     productos = [];
     categorias.clear();
 
     for (let i = 1; i < filas.length; i++) {
       const fila = filas[i];
-      if(fila.length < headers.length) continue;
+      if (fila.length < headers.length) continue;
       let prod = {};
-      headers.forEach((h, idx) => prod[h] = fila[idx] ? fila[idx].trim() : "");
-      if(prod.Visible.toUpperCase() === "TRUE") {
+      headers.forEach(
+        (h, idx) => (prod[h] = fila[idx] ? fila[idx].trim() : "")
+      );
+      if (prod.Visible.toUpperCase() === "TRUE") {
         productos.push(prod);
         categorias.add(prod.Categoria);
       }
@@ -30,8 +33,7 @@ async function cargarProductos() {
 
     llenarFiltroCategorias();
     mostrarCatalogo(productos);
-
-  } catch(error) {
+  } catch (error) {
     console.error("Error cargando productos desde Google Sheets:", error);
   }
 }
@@ -42,7 +44,7 @@ async function cargarProductos() {
 function llenarFiltroCategorias() {
   const select = document.getElementById("filtro-categoria");
   select.innerHTML = `<option value="todas">Todas las categorías</option>`;
-  categorias.forEach(cat => {
+  categorias.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
     option.textContent = cat;
@@ -58,14 +60,14 @@ function mostrarCatalogo(lista) {
   catalogoDiv.innerHTML = "";
 
   const agrupados = {};
-  lista.forEach(p => {
-    if(p.Visible.toUpperCase() === "TRUE") {
-      if(!agrupados[p.Categoria]) agrupados[p.Categoria]=[];
+  lista.forEach((p) => {
+    if (p.Visible.toUpperCase() === "TRUE") {
+      if (!agrupados[p.Categoria]) agrupados[p.Categoria] = [];
       agrupados[p.Categoria].push(p);
     }
   });
 
-  for(let cat in agrupados){
+  for (let cat in agrupados) {
     const section = document.createElement("div");
     section.classList.add("categoria");
     const h2 = document.createElement("h2");
@@ -75,11 +77,12 @@ function mostrarCatalogo(lista) {
     const contenedor = document.createElement("div");
     contenedor.classList.add("productos");
 
-    agrupados[cat].forEach(p => {
+    agrupados[cat].forEach((p) => {
       const card = document.createElement("div");
       card.classList.add("producto");
       card.innerHTML = `
-        <img src="${p.Imagen}" alt="${p.Nombre}">
+        <div class="id-etiqueta">${p.ID}</div> 
+        <img src="${p.Imagen}" alt="${p.Nombre}">
         <h3>${p.Nombre}</h3>
         <p class="descripcion-producto">${p.Descripcion}</p>
         <p class="precio">$${p.Precio}</p>
@@ -103,23 +106,40 @@ function mostrarCatalogo(lista) {
 // Filtros
 // ----------------------
 function aplicarFiltros() {
-  const texto = document.getElementById("buscador").value.toLowerCase();
-  const categoria = document.getElementById("filtro-categoria").value;
-
-  const filtrados = productos.filter(p => {
-    const coincideTexto = p.Nombre.toLowerCase().includes(texto) || p.Descripcion.toLowerCase().includes(texto);
-    const coincideCategoria = categoria === "todas" || p.Categoria === categoria;
-    return coincideTexto && coincideCategoria;
-  });
-
-  mostrarCatalogo(filtrados);
-}
+    const texto = document.getElementById("buscador").value.toLowerCase();
+    const categoria = document.getElementById("filtro-categoria").value;
+    // ✅ Obtener los valores de los nuevos inputs y parsearlos a número
+    const precioMin = parseFloat(document.getElementById("precio-min").value);
+    const precioMax = parseFloat(document.getElementById("precio-max").value);
+  
+    const filtrados = productos.filter((p) => {
+      const coincideTexto =
+        p.Nombre.toLowerCase().includes(texto) ||
+        p.Descripcion.toLowerCase().includes(texto);
+      const coincideCategoria =
+        categoria === "todas" || p.Categoria === categoria;
+  
+      // ✅ Nuevo filtro de precio
+      const precioProducto = parseFloat(p.Precio);
+      const coincidePrecioMin = isNaN(precioMin) || precioProducto >= precioMin;
+      const coincidePrecioMax = isNaN(precioMax) || precioProducto <= precioMax;
+      // ------------------------
+  
+      // ✅ Combina todos los filtros
+      return coincideTexto && coincideCategoria && coincidePrecioMin && coincidePrecioMax;
+    });
+  
+    mostrarCatalogo(filtrados);
+  }
 
 // ----------------------
 // Carrito
 // ----------------------
 function actualizarContador() {
-  document.getElementById("contador-carrito").textContent = carrito.reduce((acc,p)=>acc+p.cantidad,0);
+  document.getElementById("contador-carrito").textContent = carrito.reduce(
+    (acc, p) => acc + p.cantidad,
+    0
+  );
 }
 
 function abrirCarrito() {
@@ -135,7 +155,9 @@ function actualizarCarrito() {
   carrito.forEach((p, idx) => {
     total += p.precio * p.cantidad;
     const li = document.createElement("li");
-    li.innerHTML = `${p.nombre} x${p.cantidad} - $${(p.precio*p.cantidad).toFixed(2)} <button onclick="eliminarProducto(${idx})">X</button>`;
+    li.innerHTML = `${p.nombre} x${p.cantidad} - $${(
+      p.precio * p.cantidad
+    ).toFixed(2)} <button onclick="eliminarProducto(${idx})">X</button>`;
     lista.appendChild(li);
   });
 
@@ -144,62 +166,72 @@ function actualizarCarrito() {
 }
 
 function eliminarProducto(idx) {
-  carrito.splice(idx,1);
+  carrito.splice(idx, 1);
   actualizarCarrito();
 }
 
-// ----------------------
-// Acordeón categorías
+
+// Acordeón categorías (MODIFICADA PARA CIERRE EXCLUSIVO)
 // ----------------------
 function habilitarAcordeon() {
-  const categorias = document.querySelectorAll('.categoria');
-  categorias.forEach(cat => {
-    const titulo = cat.querySelector('h2');
-    cat.classList.remove('abierta'); // cerradas por defecto
-
-    titulo.addEventListener('click', () => {
-      cat.classList.toggle('abierta');
-    });
-  });
-}
+    const categorias = document.querySelectorAll(".categoria");
+  
+    categorias.forEach((cat) => {
+      const titulo = cat.querySelector("h2");
+      cat.classList.remove("abierta"); // Asegura que todas empiecen cerradas
+  
+      titulo.addEventListener("click", () => {
+        // 1. Verificar si la categoría clicada ya estaba abierta
+        const estabaAbierta = cat.classList.contains("abierta");
+  
+        // 2. Cerrar todas las categorías (exclusividad)
+        categorias.forEach((c) => {
+          c.classList.remove("abierta");
+        });
+  
+        // 3. Si NO estaba abierta (o si estaba abierta y la cerramos antes), ábrela.
+        // Si estaba abierta, después de ejecutar el paso 2 (cerrar todas) no volvemos a abrirla,
+        // lo que efectivamente la mantiene cerrada (comportamiento de toggle).
+        if (!estabaAbierta) {
+          cat.classList.add("abierta");
+        }
+      });
+    });
+  }
 
 // ----------------------
 // Leer más / menos
 // ----------------------
 function habilitarLeerMas(lineas = 3) {
-    // Seleccionamos todos los párrafos de descripción y sus botones
-    const tarjetas = document.querySelectorAll('.producto');
-  
-    tarjetas.forEach(card => {
-      const par = card.querySelector('.descripcion-producto'); // Usamos la clase para el párrafo
-      const btn = card.querySelector('.leer-mas'); 
-      if (!par || !btn) return; // Asegurarse de que existan
-  
-      // Calcula la altura máxima para las líneas
-      const lineHeight = parseFloat(getComputedStyle(par).lineHeight);
-      const maxHeight = lineHeight * lineas;
-  
-      // Si el contenido es corto, ocultamos el botón
-      if (par.scrollHeight <= maxHeight + 1) {
-        btn.style.display = 'none';
-        return;
-      }
-  
-      // Aplica la restricción inicial
-      par.style.maxHeight = maxHeight + 'px';
-      par.style.overflow = 'hidden';
-  
-      // Añadir el evento al botón existente
-      btn.addEventListener('click', () => {
-        const expandido = btn.getAttribute('aria-expanded') === 'true';
-        if (!expandido) {
-          par.style.maxHeight = par.scrollHeight + 'px';
-          btn.setAttribute('aria-expanded', 'true');
-          btn.textContent = 'Leer menos';
-        } else {
-          par.style.maxHeight = maxHeight + 'px';
-          btn.setAttribute('aria-expanded', 'false');
-          btn.textContent = 'Leer más';
+  // Seleccionamos todos los párrafos de descripción y sus botones
+  const tarjetas = document.querySelectorAll(".producto");
+
+  tarjetas.forEach((card) => {
+    const par = card.querySelector(".descripcion-producto"); // Usamos la clase para el párrafo
+    const btn = card.querySelector(".leer-mas");
+    if (!par || !btn) return; // Asegurarse de que existan // Calcula la altura máxima para las líneas
+
+    const lineHeight = parseFloat(getComputedStyle(par).lineHeight);
+    const maxHeight = lineHeight * lineas; // Si el contenido es corto, ocultamos el botón
+
+    if (par.scrollHeight <= maxHeight + 1) {
+      btn.style.display = "none";
+      return;
+    } // Aplica la restricción inicial
+
+    par.style.maxHeight = maxHeight + "px";
+    par.style.overflow = "hidden"; // Añadir el evento al botón existente
+
+    btn.addEventListener("click", () => {
+      const expandido = btn.getAttribute("aria-expanded") === "true";
+      if (!expandido) {
+        par.style.maxHeight = par.scrollHeight + "px";
+        btn.setAttribute("aria-expanded", "true");
+        btn.textContent = "Leer menos";
+      } else {
+        par.style.maxHeight = maxHeight + "px";
+        btn.setAttribute("aria-expanded", "false");
+        btn.textContent = "Leer más";
       }
     });
 
@@ -213,46 +245,60 @@ function habilitarLeerMas(lineas = 3) {
 function init() {
   cargarProductos();
   document.getElementById("buscador").addEventListener("input", aplicarFiltros);
-  document.getElementById("filtro-categoria").addEventListener("change", aplicarFiltros);
+  document
+    .getElementById("filtro-categoria")
+      .addEventListener("change", aplicarFiltros);
+    // ✅ Agregar event listeners para los nuevos filtros de precio
+    document.getElementById("precio-min").addEventListener("input", aplicarFiltros);
+    document.getElementById("precio-max").addEventListener("input", aplicarFiltros);
 
-  document.addEventListener("click", e => {
-    if(e.target.classList.contains("agregar-carrito")) {
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("agregar-carrito")) {
       const card = e.target.closest(".producto");
       const nombre = card.querySelector("h3").textContent;
-      const precio = parseFloat(card.querySelector(".precio").textContent.replace("$",""));
-      const item = carrito.find(p => p.nombre === nombre);
-      if(item) item.cantidad++;
-      else carrito.push({nombre, precio, cantidad:1});
+      const precio = parseFloat(
+        card.querySelector(".precio").textContent.replace("$", "")
+      );
+      const item = carrito.find((p) => p.nombre === nombre);
+      if (item) item.cantidad++;
+      else carrito.push({ nombre, precio, cantidad: 1 });
       actualizarCarrito();
     }
 
-    if(e.target.id === "icono-carrito") abrirCarrito();
+    if (e.target.id === "icono-carrito") abrirCarrito();
   });
 
-  document.getElementById("cerrar-carrito").addEventListener("click", ()=>{
+  document.getElementById("cerrar-carrito").addEventListener("click", () => {
     document.getElementById("carrito-modal").style.display = "none";
   });
 
-  document.getElementById("btn-enviar-pedido").addEventListener("click", ()=>{
+  document.getElementById("btn-enviar-pedido").addEventListener("click", () => {
     document.getElementById("formulario-modal").style.display = "flex";
   });
 
-  document.getElementById("cerrar-formulario").addEventListener("click", ()=>{
+  document.getElementById("cerrar-formulario").addEventListener("click", () => {
     document.getElementById("formulario-modal").style.display = "none";
   });
 
-  document.getElementById("formulario-pedido").addEventListener("submit", e=>{
-    e.preventDefault();
-    const form = e.target;
-    let mensaje = `Pedido de ${form.nombre.value} (${form.correo.value}, ${form.telefono.value})\nDirección: ${form.direccion.value}\n\nProductos:\n`;
-    carrito.forEach(p => mensaje += `${p.nombre} x${p.cantidad} - $${(p.precio*p.cantidad).toFixed(2)}\n`);
-    alert("Pedido enviado:\n\n" + mensaje);
+  document
+    .getElementById("formulario-pedido")
+    .addEventListener("submit", (e) => {
+      e.preventDefault();
+      const form = e.target;
+      let mensaje = `Pedido de ${form.nombre.value} (${form.correo.value}, ${form.telefono.value})\nDirección: ${form.direccion.value}\n\nProductos:\n`;
+      carrito.forEach(
+        (p) =>
+          (mensaje += `${p.nombre} x${p.cantidad} - $${(
+            p.precio * p.cantidad
+          ).toFixed(2)}\n`)
+      );
+      alert("Pedido enviado:\n\n" + mensaje);
 
-    carrito = [];
-    actualizarCarrito();
-    document.getElementById("formulario-modal").style.display = "none";
-    document.getElementById("carrito-modal").style.display = "none";
-  });
+      carrito = [];
+      actualizarCarrito();
+      document.getElementById("formulario-modal").style.display = "none";
+      document.getElementById("carrito-modal").style.display = "none";
+    });
 }
 
 // ----------------------
