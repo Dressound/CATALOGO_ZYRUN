@@ -174,6 +174,34 @@ header h1 {
   flex-direction: column;
 }
 
+.id-etiqueta {
+    position: absolute;
+    /* Posicionar en la esquina superior izquierda de la tarjeta */
+    top: 10px;
+    left: 10px;
+    /* Estilo de círculo azul pequeño */
+    background-color: var(--primary); /* Azul vibrante */
+    color: white;
+    font-size: 0.75rem; /* Tamaño de fuente pequeño */
+    font-weight: 700;
+    line-height: 1; /* Para centrar el texto verticalmente */
+    
+    /* Tamaño y forma circular */
+    width: 28px; 
+    height: 28px;
+    border-radius: 50%;
+    
+    /* Centrar el texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Asegurar que esté por encima de la imagen */
+    z-index: 10;
+    /* Añadir una sombra sutil para que resalte */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
 .producto:hover {
   transform: translateY(-8px);
   /* Efecto de elevación más notable */

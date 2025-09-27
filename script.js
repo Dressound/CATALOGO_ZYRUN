@@ -81,7 +81,8 @@ function mostrarCatalogo(lista) {
       const card = document.createElement("div");
       card.classList.add("producto");
       card.innerHTML = `
-        <img src="${p.Imagen}" alt="${p.Nombre}">
+        <div class="id-etiqueta">${p.ID}</div> 
+        <img src="${p.Imagen}" alt="${p.Nombre}">
         <h3>${p.Nombre}</h3>
         <p class="descripcion-producto">${p.Descripcion}</p>
         <p class="precio">$${p.Precio}</p>
@@ -89,8 +90,8 @@ function mostrarCatalogo(lista) {
         <button class="agregar-carrito">Agregar al carrito</button>
         <button class="leer-mas" aria-expanded="false">Leer más</button> 
       `;
-      contenedor.appendChild(card);
-    });
+      contenedor.appendChild(card);
+    });
 
     section.appendChild(contenedor);
     catalogoDiv.appendChild(section);
