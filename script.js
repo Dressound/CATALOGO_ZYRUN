@@ -285,20 +285,44 @@ function init() {
     .addEventListener("submit", (e) => {
       e.preventDefault();
       const form = e.target;
-      let mensaje = `Pedido de ${form.nombre.value} (${form.correo.value}, ${form.telefono.value})\nDirección: ${form.direccion.value}\n\nProductos:\n`;
-      carrito.forEach(
-        (p) =>
-          (mensaje += `${p.nombre} x${p.cantidad} - $${(
-            p.precio * p.cantidad
-          ).toFixed(2)}\n`)
-      );
-      alert("Pedido enviado:\n\n" + mensaje);
+      let total = 0;
 
-      carrito = [];
-      actualizarCarrito();
-      document.getElementById("formulario-modal").style.display = "none";
-      document.getElementById("carrito-modal").style.display = "none";
-    });
+      // 1. Construir el mensaje de pedido detallado
+      let mensaje = `*🚨 NUEVO PEDIDO EN LÍNEA 🚨*\n\n`;
+      mensaje += `*CLIENTE:*\n`;
+      mensaje += `👤 Nombre del Cliente:${form.nombre.value}\n`;
+      mensaje += `📞 Telefono:${form.telefono.value}\n`; // El número del cliente es crucial
+      mensaje += `📧 Correo electronico${form.correo.value}\n`;
+      mensaje += `📍 Dirección de entrega: ${form.direccion.value}\n`;
+      mensaje += `------------------------------------\n`;
+      mensaje += `*PRODUCTOS:*\n`;
+
+      carrito.forEach((p) => {
+        const subtotal = p.precio * p.cantidad;
+        total += subtotal;
+        mensaje += `✅ ${p.nombre} /TotalUnidades:${p.cantidad} (Precio:$${subtotal.toFixed(2)})\n`;
+      });
+
+      mensaje += `\n*TOTAL DEL PEDIDO: $${total.toFixed(2)}*\n`;
+      mensaje += `------------------------------------`;
+
+
+      // 2. Configurar el enlace de WhatsApp
+      // NOTA: Usa tu número de WhatsApp completo (ej: 593993842259)
+      const miNumeroWhatsApp = "593993842259"; 
+      const textoCodificado = encodeURIComponent(mensaje);
+      const whatsappURL = `https://wa.me/${miNumeroWhatsApp}?text=${textoCodificado}`;
+
+      // 3. Abrir WhatsApp
+      window.open(whatsappURL, "_blank");
+
+      // 4. Limpieza post-envío
+      carrito = [];
+      actualizarCarrito();
+      document.getElementById("formulario-modal").style.display = "none";
+      document.getElementById("carrito-modal").style.display = "none";
+      form.reset(); // Opcional: limpiar el formulario después del envío
+    });
 }
 
 // ----------------------
