@@ -169,20 +169,34 @@ function eliminarProducto(idx) {
   actualizarCarrito();
 }
 
-// ----------------------
-// Acordeón categorías
+
+// Acordeón categorías (MODIFICADA PARA CIERRE EXCLUSIVO)
 // ----------------------
 function habilitarAcordeon() {
-  const categorias = document.querySelectorAll(".categoria");
-  categorias.forEach((cat) => {
-    const titulo = cat.querySelector("h2");
-    cat.classList.remove("abierta"); // cerradas por defecto
-
-    titulo.addEventListener("click", () => {
-      cat.classList.toggle("abierta");
-    });
-  });
-}
+    const categorias = document.querySelectorAll(".categoria");
+  
+    categorias.forEach((cat) => {
+      const titulo = cat.querySelector("h2");
+      cat.classList.remove("abierta"); // Asegura que todas empiecen cerradas
+  
+      titulo.addEventListener("click", () => {
+        // 1. Verificar si la categoría clicada ya estaba abierta
+        const estabaAbierta = cat.classList.contains("abierta");
+  
+        // 2. Cerrar todas las categorías (exclusividad)
+        categorias.forEach((c) => {
+          c.classList.remove("abierta");
+        });
+  
+        // 3. Si NO estaba abierta (o si estaba abierta y la cerramos antes), ábrela.
+        // Si estaba abierta, después de ejecutar el paso 2 (cerrar todas) no volvemos a abrirla,
+        // lo que efectivamente la mantiene cerrada (comportamiento de toggle).
+        if (!estabaAbierta) {
+          cat.classList.add("abierta");
+        }
+      });
+    });
+  }
 
 // ----------------------
 // Leer más / menos
