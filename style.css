@@ -323,17 +323,18 @@ header h1 {
   padding: 20px;
 }
 
-.carrito-contenido {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: var(--radius);
-  width: 100%;
-  max-width: 450px;
-  text-align: center;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow);
-  animation: modalIn 0.3s ease-out;
+/* Unificar el estilo de los botones del carrito para que sean más anchos y claros */
+.carrito-contenido button {
+    /* Estilo base para todos los botones dentro del modal */
+    width: 100%; /* Hacemos que todos ocupen el 100% */
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background 0.3s ease, transform 0.1s ease;
 }
 
 @keyframes modalIn {
@@ -349,7 +350,7 @@ header h1 {
 }
 
 .carrito-contenido h2 {
-  color: var(--primary);
+  color: #eee;
   margin-bottom: 15px;
 }
 
@@ -371,41 +372,61 @@ header h1 {
   padding: 8px 0;
   border-bottom: 1px dotted #eee;
   font-size: 1rem;
-  color: var(--text);
+  color: white;
 }
 
+/* Resaltar el Total */
+.carrito-contenido p:has(#total-carrito) { /* Selecciona el párrafo que contiene el total */
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    padding: 10px 0;
+    margin-bottom: 5px;
+    border-top: 1px solid #ccc; /* Línea de separación antes del total */
+}
+
+/* Botón de Eliminar de la Lista (más limpio) */
 #lista-carrito li button {
-  background: #e74c3c;
-  border: none;
+  background: none; /* Quitamos el fondo rojo */
+  border: 1px solid #e74c3c; /* Borde rojo */
+  color: #e74c3c; /* Texto rojo */
+  border-radius: 50%; /* Lo hacemos un círculo pequeño */
+  padding: 2px 7px; /* Ajustamos el padding */
+  font-weight: 700;
+}
+#lista-carrito li button:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+
+/* Botón de acción principal: ENVIAR PEDIDO */
+#btn-enviar-pedido,
+#formulario-pedido button[type="submit"] {
+  background: var(--primary); /* Usamos el azul principal como acción clave */
   color: white;
-  border-radius: 4px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  margin-left: 10px;
+  margin-right: 0; /* Eliminamos el margen para que ocupe todo el ancho */
 }
 
-#btn-enviar-pedido {
-  background: var(--secondary);
-  color: white;
-  margin-right: 10px;
+
+#btn-enviar-pedido:hover,
+#formulario-pedido button[type="submit"]:hover {
+  background: var(--primary-dark);
 }
 
-#btn-enviar-pedido:hover {
-  background: #218838;
-}
 
+/* Botones secundarios: CERRAR */
 #cerrar-carrito,
 #cerrar-formulario {
-  background: #7f8c8d;
-  color: white;
+  background: #e9ecef; /* Fondo gris claro suave */
+  color: #000; /* ✅ Cambio a negro para máximo contraste sobre el gris claro */
 }
 
 #cerrar-carrito:hover,
 #cerrar-formulario:hover {
-  background: #6c7a89;
+  background: #ced4da;
+  color: #000; /* Aseguramos que siga siendo negro en el hover */
 }
-
 
 /* Formulario de Pedido */
 #formulario-pedido input,
