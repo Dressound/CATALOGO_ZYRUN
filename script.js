@@ -202,7 +202,7 @@ function habilitarAcordeon() {
 // ----------------------
 // Leer más / menos
 // ----------------------
-function habilitarLeerMas(lineas = 3) {
+function habilitarLeerMas(lineas = 2) {
   // Seleccionamos todos los párrafos de descripción y sus botones
   const tarjetas = document.querySelectorAll(".producto");
 
