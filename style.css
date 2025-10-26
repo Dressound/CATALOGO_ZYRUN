@@ -81,7 +81,7 @@ header {
 /* 2. Título principal (Escritorio) */
 header h1 {
     grid-column: 2 / 3;
-    color: var(--text);
+    color: var(--neon-cyan);
     font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 700;
     text-align: left;
