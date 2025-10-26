@@ -73,7 +73,7 @@ header {
 .logo {
     grid-column: 1 / 2;
     justify-self: start; 
-    max-height: 55px; /* Altura ajustada */
+    max-height: 55px;
     width: auto; 
     object-fit: contain;
 }
@@ -131,7 +131,7 @@ header h1 {
     grid-column: 2 / 4; 
     display: flex;
     justify-content: flex-start;
-    gap: 10px; /* 🔥 REDUCIDO DE 15px a 10px (Espacio entre filtros) */
+    gap: 10px; /* ✅ Espacio reducido entre filtros */
     flex-wrap: wrap;
     width: 100%;
     margin: 10px 0 0 0;
@@ -162,7 +162,7 @@ header h1 {
  * CATEGORÍAS
  * ------------------- */
 .categoria {
-    margin-bottom: 10px; /* 🔥 REDUCIDO DE 40px a 10px (Espacio entre categorías) */
+    margin-bottom: 10px; /* ✅ Espacio reducido entre categorías */
     animation: fadeIn 0.6s ease-in-out;
 }
 
@@ -206,8 +206,8 @@ header h1 {
  * ------------------- */
 .productos {
     display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ejemplo de tarjetas más grandes */
+    /* ✅ Tamaño de tarjetas ajustado (300px min-width) */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 30px;
     margin-top: 5px;
     align-items: stretch;
@@ -283,13 +283,13 @@ header h1 {
     margin: -1px 0 -5px 0;
     color: white;
     
-    /* 🔥 LIMITA A DOS LÍNEAS 🔥 */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* CLAVE para el límite de 2 líneas */
+    /* 🔥 ELIMINAMOS -webkit-line-clamp: 2 para que el JS controle el "Leer Más" */
+    display: block; /* Vuelve a ser un bloque normal */
     
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* Las siguientes propiedades son ahora controladas por JS (habilitarLeerMas) */
+    /* Dejamos solo los estilos visuales base. La restricción de altura la pone JS */
+    /* La propiedad overflow la controla temporalmente JS */
+    text-overflow: ellipsis; /* Esto es solo visual si el JS corta la línea */
 }
 
 .precio {
@@ -568,11 +568,10 @@ footer {
         margin: 0;
     }
     
-    /* 3. Carrito: Fijo en la esquina (Ya usa 'position: fixed' en estilos base,
-                  así que solo ajustamos la posición para el móvil si es necesario) */
+    /* 3. Carrito: Fijo en la esquina */
     .icono-carrito {
-        right: 10px; /* Un poco más cerca del borde en móvil */
-        top: 10px; /* Posicionado más arriba */
+        right: 10px; 
+        top: 10px; 
         font-size: 1.8rem;
     }
     
