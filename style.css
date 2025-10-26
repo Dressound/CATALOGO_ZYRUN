@@ -1,332 +1,374 @@
 /* -------------------
-    RESET & BASE - Buenas Prácticas
-------------------- */
+ * RESET & BASE - Buenas Prácticas
+ * ------------------- */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* =========================================================
+   🔥 VARIABLES REDEFINIDAS PARA ESTÉTICA ZYRUN.EC NEÓN 🔥
+   ========================================================= */
 :root {
-  /* Paleta de colores más moderna */
-  --primary: #007bff;
-  /* Azul vibrante para acciones principales */
-  --primary-dark: #0056b3;
-  --secondary: #28a745;
-  /* Verde para precios/éxito */
-  --text: #2c3e50;
-  /* Gris oscuro para mayor legibilidad */
-  --text-light: #7f8c8d;
-  /* Gris claro para descripciones */
-  --bg: #ecf0f1;
-  /* Fondo muy claro */
-  --card-bg: #fff;
-  --radius: 12px;
-  /* Sombra más suave y moderna */
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.05);
+    /* Fondo principal: Morado/Negro profundo */
+    --bg: #1A0033; 
+    /* Fondo para tarjetas y modales, un poco más claro que el fondo */
+    --card-bg: #220044; 
+
+    /* Colores Neón (Brillantes y de Alto Contraste) */
+    --neon-cyan: #00FFFF;
+    --neon-magenta: #FF00FF;
+
+    /* Acciones principales (Cian Neón) */
+    --primary: var(--neon-cyan);
+    --primary-dark: #00BFFF; 
+
+    /* Colores Secundarios (Magenta Neón) */
+    --secondary: var(--neon-magenta);
+    --secondary-dark: #CC00CC; 
+
+    /* Texto */
+    --text: #E0E0E0; 
+    --text-light: #AAAAAA; 
+
+    --radius: 8px;
+    /* Sombra de neón */
+    --shadow: 0 0 10px rgba(0, 255, 255, 0.4), 0 0 5px rgba(255, 0, 255, 0.2);
 }
 
 body {
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-  /* Fuente más actual */
-  background: var(--bg);
-  color: var(--text);
-  padding: 20px;
-  line-height: 1.5;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px; /* Padding base para escritorio */
+    line-height: 1.5;
 }
 
 /* -------------------
-  HEADER
-------------------- */
+ * HEADER - ESTILOS BASE Y ESCRITORIO
+ * El logo domina la izquierda, el título y filtros a la derecha.
+ * ------------------- */
 header {
-  text-align: center;
-  margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+    background: var(--bg);
+    padding: 0;
+    position: relative; /* Necesario para el posicionamiento absoluto del carrito en móvil */
 }
 
+/* Contenedor principal del header: Utiliza Grid (Escritorio) */
 .header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-  gap: 15px;
-  /* Más espacio entre elementos */
+    /* Define 3 columnas: [Logo (30%)] [Título (restante)] [Carrito (auto)] */
+    display: grid;
+    grid-template-columns: 30% 1fr auto; 
+    gap: 10px;
+    align-items: center;
+    padding: 10px 40px; 
+    max-width: 1400px; 
+    margin: 0 auto 15px auto;
 }
 
-header h1 {
-  color: var(--text);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 600;
-  /* Fuente semibold */
-  flex: 1;
-  text-align: center;
-}
-
+/* 1. Logo (Escritorio) */
 .logo {
-  max-height: 50px;
-  flex-shrink: 0;
+    grid-column: 1 / 2;
+    justify-self: start; 
+    max-height: 100px;
+    width: auto; /* Permite el autoajuste de ancho manteniendo la proporción */
+    object-fit: contain;
 }
 
+/* 2. Título principal (Escritorio) */
+header h1 {
+    grid-column: 2 / 3;
+    color: var(--text);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    text-align: left;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); 
+    margin: 0;
+}
+
+/* 3. Icono Carrito (Escritorio) */
+.icono-carrito {
+    grid-column: 3 / 4;
+    justify-self: end;
+    font-size: 2.2rem;
+    color: var(--primary); 
+    text-shadow: 0 0 5px var(--primary);
+    cursor: pointer;
+    position: relative; 
+    transition: transform 0.2s ease;
+}
+
+.icono-carrito:hover {
+    transform: scale(1.1);
+    color: var(--neon-magenta);
+    text-shadow: 0 0 8px var(--neon-magenta);
+}
+
+#contador-carrito {
+    background: var(--neon-magenta);
+    color: var(--bg);
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    box-shadow: 0 0 8px var(--neon-magenta);
+}
+
+/* 4. Filtros (Escritorio) */
 .filtros {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+    grid-column: 2 / 4; 
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 10px 0 0 0;
 }
 
 .filtros input,
 .filtros select {
-  padding: 10px 15px;
-  border: 1px solid #bdc3c7;
-  border-radius: 8px;
-  /* Radio más sutil */
-  min-width: 150px;
-  flex-grow: 1;
-  max-width: 250px;
-  /* ------------------------------------------------------------- */
-  font-size: 1rem;
- transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--card-bg);
+    color: var(--text);
+    padding: 12px 18px; 
+    border: 2px solid var(--neon-magenta);
+    border-radius: 12px;
+    min-width: 150px;
+    flex-grow: 1;
+    max-width: 250px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filtros input:focus,
 .filtros select:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-  outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    outline: none;
 }
 
 /* -------------------
-  ICONO CARRITO
-------------------- */
-.icono-carrito {
-  cursor: pointer;
-  font-size: 1.8rem;
-  position: relative;
-  transition: transform 0.2s ease;
-}
-
-.icono-carrito:hover {
-  transform: scale(1.1);
-}
-
-#contador-carrito {
-  background: #e74c3c;
-  /* Rojo de alerta */
-  color: white;
-  border-radius: 50%;
-  padding: 3px 7px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* -------------------
-  CATEGORÍAS
-------------------- */
+ * CATEGORÍAS
+ * ------------------- */
 .categoria {
-  margin-bottom: 40px;
-  animation: fadeIn 0.6s ease-in-out;
+    margin-bottom: 40px;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
 .categoria h2 {
-  background: linear-gradient(90deg, var(--primary), #3498db);
-  color: white;
-  padding: 14px 20px;
-  border-radius: var(--radius);
-  font-size: 1.3rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  text-align: left;
-  letter-spacing: 0.5px;
+    /* Degradado de cian a magenta neón */
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+    color: var(--bg);
+    font-weight: 900;
+    font-size: 1.4rem;
+    padding: 14px 25px;
+    border-radius: 0; 
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 1px;
+
+    /* Propiedades para que la barra se extienda de borde a borde */
+    width: 100vw; 
+    margin-left: -20px; 
+    position: relative;
+
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.4); 
+}
+
+.categoria h2::after {
+    content: "▼";
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+    color: var(--bg);
+}
+
+.categoria.abierta h2::after {
+    transform: rotate(180deg);
 }
 
 /* -------------------
-  PRODUCTOS - Diseño Compacto y Profesional
-------------------- */
+ * PRODUCTOS 
+ * ------------------- */
 .productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
-  /* Más espacio entre tarjetas */
-  margin-top: -45px;
-  align-items: stretch;
-  /* Permite que todas las tarjetas tengan la misma altura */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 5px;
+    align-items: stretch;
+
+    /* Propiedades clave del acordeón */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.categoria.abierta .productos {
+    max-height: 100000px;
+    margin-top: 30px; 
 }
 
 .producto {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  /* padding: [vertical] [horizontal]; */
-  /* Reducimos el padding de 20px a 15px o 10px para compactar el diseño verticalmente. */
-  padding: 15px 20px;
-  /* 15px arriba/abajo, 20px a los lados */
-  box-shadow: var(--shadow);
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-  text-align: center;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 15px 20px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+    border: 1px solid var(--neon-cyan); 
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .id-etiqueta {
     position: absolute;
-    /* Posicionar en la esquina superior izquierda de la tarjeta */
     top: 10px;
     left: 10px;
-    /* Estilo de círculo azul pequeño */
-    background-color: var(--primary); /* Azul vibrante */
-    color: white;
-    font-size: 0.75rem; /* Tamaño de fuente pequeño */
+    background-color: var(--neon-magenta);
+    color: var(--bg);
+    font-size: 0.75rem;
     font-weight: 700;
-    line-height: 1; /* Para centrar el texto verticalmente */
-    
-    /* Tamaño y forma circular */
-    width: 28px; 
+    line-height: 1;
+    width: 28px;
     height: 28px;
     border-radius: 50%;
-    
-    /* Centrar el texto */
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* Asegurar que esté por encima de la imagen */
     z-index: 10;
-    /* Añadir una sombra sutil para que resalte */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
+    box-shadow: 0 0 6px var(--neon-magenta);
+}
 
 .producto:hover {
-  transform: translateY(-8px);
-  /* Efecto de elevación más notable */
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+    transform: translateY(-8px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    border-color: var(--neon-magenta);
 }
 
 .producto img {
-  max-width: 100%;
-  height: 180px;
-  /* Altura de imagen más compacta */
-  object-fit: contain;
-  /* Usamos 'contain' para asegurar que el producto completo se vea */
-  border-radius: 8px;
-  margin-bottom: 0px;
-  /* Espacio reducido */
+    max-width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 0px;
 }
 
 .producto h3 {
-  /* Margen: 2px arriba y 2px abajo */
-  margin: -2px -2px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text);
-  flex-shrink: 0;
+    margin: -2px -2px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary);
+    flex-shrink: 0;
 }
 
-/* 🔹 Descripción con truncado (Usando .descripcion-producto del JS) */
 .producto .descripcion-producto,
 .producto p:not(.precio):not(.stock) {
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
-  /* 🔥 CORRECCIÓN: Volver a márgenes normales. Usa 6px abajo. 🔥 */
-  margin: -1px 0 -5px 0;
-  color: var(--text-light);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* (Asegúrate de que flex-grow: 1; siga eliminado) */
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    margin: -1px 0 -5px 0;
+    color: var(--text-light);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* 🔥 CORRECCIÓN CRUCIAL: PEGAR PRECIO Y STOCK 🔥 */
 .precio {
-  font-weight: 700;
-  color: var(--secondary);
-  font-size: 1.25rem;
-  /* 🔥 CORRECCIÓN: Margen superior de 8px, margen inferior de 0px para pegarse al stock. 🔥 */
-  margin: -22px 0 -2px 0;
-  padding-bottom: 0;
-  /* Asegurar que no haya padding */
+    font-weight: 700;
+    color: var(--neon-magenta);
+    font-size: 1.35rem;
+    margin: -22px 0 -2px 0;
+    padding-bottom: 0;
+    text-shadow: 0 0 3px var(--neon-magenta);
 }
 
 .stock {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  /* Margen CERO Arriba y a los lados */
-  margin: -20px 0 0 0;
-  /* Padding para separar del botón (si el JS lo maneja, sino 5px) */
-  padding-bottom: 0px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin: -20px 0 0 0;
+    padding-bottom: 0px;
 }
 
-/* Contenedor de botones para asegurar un espaciado uniforme */
 .producto button {
-  /* Estilo general para todos los botones de la tarjeta */
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: background 0.3s ease, transform 0.1s ease;
-  margin-top: -20px;
-  /* Espacio entre botones y stock/botones */
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    margin-top: -20px;
 }
 
 .producto button:active {
-  transform: scale(0.99);
+    transform: scale(0.99);
 }
 
-/* Botón principal */
+/* Botón principal: AGREGAR CARRITO (Cian Neón) */
 .agregar-carrito {
-  background: var(--primary);
-  color: white;
+    background: var(--primary);
+    color: var(--bg);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 .agregar-carrito:hover {
-  background: var(--primary-dark);
+    background: var(--primary-dark);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
 }
 
-/* Botón secundario */
+/* Botón secundario: LEER MÁS (Magenta Neón) */
 .leer-mas {
-  background: #95a5a6;
-  /* Gris neutro */
-  color: white;
-  margin-top: 1px;
-  /* Más espacio entre los dos botones */
+    background: var(--secondary);
+    color: var(--bg);
+    margin-top: 1px;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
 }
 
 .leer-mas:hover {
-  background: #7f8c8d;
+    background: var(--secondary-dark);
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.7);
 }
 
 
 /* -------------------
-  MODALES
-------------------- */
+ * MODALES
+ * ------------------- */
 .carrito-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  /* Oscurecido */
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 20px;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
 }
 
-/* Unificar el estilo de los botones del carrito para que sean más anchos y claros */
+.carrito-contenido {
+    background: var(--card-bg);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    animation: modalIn 0.3s ease-in-out;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+}
+
 .carrito-contenido button {
-    /* Estilo base para todos los botones dentro del modal */
-    width: 100%; /* Hacemos que todos ocupen el 100% */
+    width: 100%;
     padding: 12px;
     border: none;
     border-radius: 8px;
@@ -334,181 +376,223 @@ header h1 {
     font-size: 1rem;
     font-weight: 600;
     margin-top: 10px;
-    transition: background 0.3s ease, transform 0.1s ease;
+    transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
 }
 
 @keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .carrito-contenido h2 {
-  color: #eee;
-  margin-bottom: 15px;
+    color: var(--primary);
+    text-shadow: 0 0 5px var(--primary);
+    margin-bottom: 15px;
 }
 
 #lista-carrito {
-  list-style: none;
-  max-height: 250px;
-  overflow-y: auto;
-  margin-bottom: 15px;
-  padding-right: 10px;
-  text-align: left;
-  border-top: 1px solid #eee;
-  padding-top: 10px;
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 10px;
+    text-align: left;
+    border-top: 1px solid var(--text-light);
+    padding-top: 10px;
 }
 
 #lista-carrito li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px dotted #eee;
-  font-size: 1rem;
-  color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--text-light);
+    font-size: 1rem;
+    color: var(--text);
 }
 
-/* Resaltar el Total */
-.carrito-contenido p:has(#total-carrito) { /* Selecciona el párrafo que contiene el total */
-    font-size: 1.4rem;
+.carrito-contenido p:has(#total-carrito) {
+    font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 5px var(--neon-magenta);
     padding: 10px 0;
     margin-bottom: 5px;
-    border-top: 1px solid #ccc; /* Línea de separación antes del total */
+    border-top: 1px solid var(--neon-cyan);
 }
 
-/* Botón de Eliminar de la Lista (más limpio) */
 #lista-carrito li button {
-  background: none; /* Quitamos el fondo rojo */
-  border: 1px solid #e74c3c; /* Borde rojo */
-  color: #e74c3c; /* Texto rojo */
-  border-radius: 50%; /* Lo hacemos un círculo pequeño */
-  padding: 2px 7px; /* Ajustamos el padding */
-  font-weight: 700;
+    background: none;
+    border: 1px solid var(--neon-magenta);
+    color: var(--neon-magenta);
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-weight: 700;
+    box-shadow: none;
 }
 #lista-carrito li button:hover {
-    background: #e74c3c;
-    color: white;
+    background: var(--neon-magenta);
+    color: var(--bg);
 }
 
 
-/* Botón de acción principal: ENVIAR PEDIDO */
+/* Botón de acción principal: ENVIAR PEDIDO (Cian Neón) */
 #btn-enviar-pedido,
 #formulario-pedido button[type="submit"] {
-  background: var(--primary); /* Usamos el azul principal como acción clave */
-  color: white;
-  margin-right: 0; /* Eliminamos el margen para que ocupe todo el ancho */
+    background: var(--primary);
+    color: var(--bg);
+    margin-right: 0;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
-
 
 #btn-enviar-pedido:hover,
 #formulario-pedido button[type="submit"]:hover {
-  background: var(--primary-dark);
+    background: var(--primary-dark);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
 }
 
 
-/* Botones secundarios: CERRAR */
+/* Botones secundarios: CERRAR (Magenta Neón) */
 #cerrar-carrito,
 #cerrar-formulario {
-  background: #e9ecef; /* Fondo gris claro suave */
-  color: #000; /* ✅ Cambio a negro para máximo contraste sobre el gris claro */
+    background: var(--secondary);
+    color: var(--bg);
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
 }
 
 #cerrar-carrito:hover,
 #cerrar-formulario:hover {
-  background: #ced4da;
-  color: #000; /* Aseguramos que siga siendo negro en el hover */
+    background: var(--secondary-dark);
+    color: var(--bg);
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.7);
 }
 
 /* Formulario de Pedido */
 #formulario-pedido input,
 #formulario-pedido textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    background: var(--card-bg);
+    color: var(--text);
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--text-light);
+    border-radius: 5px;
+}
+
+#formulario-pedido input:focus,
+#formulario-pedido textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    outline: none;
 }
 
 #formulario-pedido textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-#formulario-pedido button[type="submit"] {
-  background: var(--primary);
-  color: white;
-  margin-top: 10px;
-}
-
-#formulario-pedido button[type="submit"]:hover {
-  background: var(--primary-dark);
+    resize: vertical;
+    min-height: 80px;
 }
 
 /* -------------------
-  FOOTER
-------------------- */
+ * FOOTER
+ * ------------------- */
 footer {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  border-top: 1px solid #bdc3c7;
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--neon-magenta);
 }
 
 .contacto {
-  text-align: center;
-  margin: 10px 0 15px 0;
-  font-weight: 600;
-  color: var(--primary);
-  font-size: 1rem;
+    text-align: center;
+    margin: 10px 0 15px 0;
+    font-weight: 600;
+    color: var(--primary);
+    text-shadow: 0 0 5px var(--primary);
+    font-size: 1rem;
 }
 
-/* -------------------
-  ACORDEÓN
-------------------- */
-.categoria h2 {
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.categoria h2::after {
-  content: "▼";
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-}
+/* =========================================================
+   MEDIA QUERY PARA RESPONSIVIDAD (MÓVIL Y TABLET PEQUEÑA) 📱
+   ========================================================= */
+@media (max-width: 768px) {
+    /* Ajuste del BODY para un padding más pequeño en móvil */
+    body {
+        padding: 10px;
+    }
 
-.categoria.abierta h2::after {
-  transform: rotate(180deg);
-}
+    /* Ajuste del HEADER - Se apila en un formato vertical */
+    .header-top {
+        /* Usamos una sola columna para apilar los elementos */
+        display: grid;
+        grid-template-columns: 1fr; /* Una sola columna */
+        padding: 10px 10px; 
+        gap: 10px;
+    }
 
-.productos {
-  /* Mantenemos el display grid para el diseño de las tarjetas */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
-  /* Margen normal para separar del título de la categoría */
-  margin-top: 5px;
-  align-items: stretch;
+    /* 1. Logo: Fila 1 - Arriba y Centrado */
+    .logo {
+        grid-column: 1 / -1; 
+        order: 1; /* Fila 1 */
+        max-height: 50px; /* Tamaño reducido para móvil */
+        width: auto; 
+        justify-self: center; /* 🔥 Centra el logo */
+        margin-bottom: 0;
+    }
 
-  /* Propiedades clave del acordeón: OCULTAR por defecto */
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out;
-}
+    /* 2. Título principal: Fila 2 - Centrado */
+    header h1 {
+        grid-column: 1 / -1; 
+        order: 2; /* Fila 2 */
+        font-size: 1.8rem; 
+        text-align: center; 
+        justify-self: center; /* Centra el título */
+        margin: 0;
+    }
+    
+    /* 3. Carrito: Se posiciona ABSOLUTO para que quede a la altura del título */
+    .icono-carrito {
+        /* Se saca del flujo normal para flotar junto al h1 */
+        position: absolute;
+        top: 60px; /* Ajuste para que quede a la altura del título (puedes ajustarlo si es necesario) */
+        right: 10px; 
+        font-size: 1.8rem;
+        z-index: 50;
+        
+        /* Desactivamos las propiedades de Grid para evitar conflictos */
+        grid-column: auto;
+        order: auto; 
+        justify-self: auto;
+    }
+    
+    /* 4. Filtros: Fila 3 - Se apilan y ocupan todo el ancho */
+    .filtros {
+        grid-column: 1 / -1;
+        order: 3;
+        justify-content: center;
+        flex-direction: column; /* Apilamos los filtros */
+        gap: 5px;
+        margin: 0;
+    }
+    
+    .filtros input,
+    .filtros select {
+        min-width: 100%;
+        max-width: 100%;
+    }
 
-.categoria.abierta .productos {
-  max-height: 100000px;
+    /* Ajuste para la barra de categoría extendida */
+    .categoria h2 {
+        width: 100vw;
+        margin-left: -10px; /* Contrarresta el padding de 10px del body en móvil */
+        font-size: 1.2rem;
+        padding: 10px 15px;
+    }
 }
