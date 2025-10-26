@@ -552,7 +552,7 @@ footer {
     .logo {
         grid-column: 1 / -1; 
         order: 1; /* Fila 1 */
-        max-height: 50px; 
+        max-height: 48px; 
         width: auto; 
         justify-self: center; /* Centra el logo */
         margin-bottom: 0;
