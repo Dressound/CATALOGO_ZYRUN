@@ -47,14 +47,14 @@ body {
 
 /* -------------------
  * HEADER - ESTILOS BASE Y ESCRITORIO
- * El logo domina la izquierda, el título y filtros a la derecha.
+ * Logo a la izquierda, título y filtros a la derecha.
  * ------------------- */
 header {
     text-align: center;
     margin-bottom: 30px;
     background: var(--bg);
     padding: 0;
-    position: relative; /* Necesario para el posicionamiento absoluto del carrito en móvil */
+    position: relative; 
 }
 
 /* Contenedor principal del header: Utiliza Grid (Escritorio) */
@@ -73,8 +73,8 @@ header {
 .logo {
     grid-column: 1 / 2;
     justify-self: start; 
-    max-height: 55px;
-    width: auto; /* Permite el autoajuste de ancho manteniendo la proporción */
+    max-height: 55px; /* Altura ajustada */
+    width: auto; 
     object-fit: contain;
 }
 
@@ -89,15 +89,21 @@ header h1 {
     margin: 0;
 }
 
-/* 3. Icono Carrito (Escritorio) */
+/* 3. Icono Carrito (Escritorio y FIJO) */
 .icono-carrito {
-    grid-column: 3 / 4;
-    justify-self: end;
+    /* Quitamos el posicionamiento de grid para fijarlo a la ventana */
+    
     font-size: 2.2rem;
     color: var(--primary); 
     text-shadow: 0 0 5px var(--primary);
     cursor: pointer;
-    position: relative; 
+    
+    /* 🔥 FIJAR A LA PANTALLA 🔥 */
+    position: fixed; 
+    top: 20px;       
+    right: 20px;     
+    z-index: 999;    
+    
     transition: transform 0.2s ease;
 }
 
@@ -125,7 +131,7 @@ header h1 {
     grid-column: 2 / 4; 
     display: flex;
     justify-content: flex-start;
-    gap: 15px;
+    gap: 10px; /* 🔥 REDUCIDO DE 15px a 10px (Espacio entre filtros) */
     flex-wrap: wrap;
     width: 100%;
     margin: 10px 0 0 0;
@@ -156,7 +162,7 @@ header h1 {
  * CATEGORÍAS
  * ------------------- */
 .categoria {
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* 🔥 REDUCIDO DE 40px a 10px (Espacio entre categorías) */
     animation: fadeIn 0.6s ease-in-out;
 }
 
@@ -200,7 +206,8 @@ header h1 {
  * ------------------- */
 .productos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ejemplo de tarjetas más grandes */
     gap: 30px;
     margin-top: 5px;
     align-items: stretch;
@@ -274,9 +281,13 @@ header h1 {
 .producto p:not(.precio):not(.stock) {
     font-size: clamp(0.85rem, 2vw, 0.95rem);
     margin: -1px 0 -5px 0;
-    color: var(--text-light);
+    color: white;
+    
+    /* 🔥 LIMITA A DOS LÍNEAS 🔥 */
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* CLAVE para el límite de 2 líneas */
+    
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -292,7 +303,7 @@ header h1 {
 
 .stock {
     font-size: 0.85rem;
-    color: var(--text-light);
+    color: white;
     margin: -20px 0 0 0;
     padding-bottom: 0px;
 }
@@ -340,7 +351,7 @@ header h1 {
 
 
 /* -------------------
- * MODALES
+ * MODALES (Estilos de Carrito y Formulario)
  * ------------------- */
 .carrito-modal {
     display: none;
@@ -481,7 +492,7 @@ header h1 {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid var(--text-light);
+    border: 1px solid white;
     border-radius: 5px;
 }
 
@@ -505,7 +516,7 @@ footer {
     margin-top: 40px;
     padding: 20px;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: white;
     border-top: 1px solid var(--neon-magenta);
 }
 
@@ -541,9 +552,9 @@ footer {
     .logo {
         grid-column: 1 / -1; 
         order: 1; /* Fila 1 */
-        max-height: 50px; /* Tamaño reducido para móvil */
+        max-height: 50px; 
         width: auto; 
-        justify-self: center; /* 🔥 Centra el logo */
+        justify-self: center; /* Centra el logo */
         margin-bottom: 0;
     }
 
@@ -557,19 +568,12 @@ footer {
         margin: 0;
     }
     
-    /* 3. Carrito: Se posiciona ABSOLUTO para que quede a la altura del título */
+    /* 3. Carrito: Fijo en la esquina (Ya usa 'position: fixed' en estilos base,
+                  así que solo ajustamos la posición para el móvil si es necesario) */
     .icono-carrito {
-        /* Se saca del flujo normal para flotar junto al h1 */
-        position: absolute;
-        top: 60px; /* Ajuste para que quede a la altura del título (puedes ajustarlo si es necesario) */
-        right: 10px; 
+        right: 10px; /* Un poco más cerca del borde en móvil */
+        top: 10px; /* Posicionado más arriba */
         font-size: 1.8rem;
-        z-index: 50;
-        
-        /* Desactivamos las propiedades de Grid para evitar conflictos */
-        grid-column: auto;
-        order: auto; 
-        justify-self: auto;
     }
     
     /* 4. Filtros: Fila 3 - Se apilan y ocupan todo el ancho */
